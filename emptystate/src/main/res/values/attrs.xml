@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="EmptyState">
+
+        <attr name="emps_iconSize" format="enum"/>
+        <attr name="emps_icon" format="reference"/>
+        <attr name="emps_text" format="string"/>
+        <attr name="emps_textSize" format="dimension"/>
+        <attr name="emps_textColor" format="color"/>
+        <attr name="emps_buttonText" format="string"/>
+        <attr name="emps_buttonTextColor" format="color"/>
+        <attr name="emps_buttonTextSize" format="dimension"/>
+        <attr name="emps_buttonBackgroundColor" format="reference"/>
+        <attr name="emps_buttonCorner" format="dimension"/>
+
+    </declare-styleable>
+
+</resources>
