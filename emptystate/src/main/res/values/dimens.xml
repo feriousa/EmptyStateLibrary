@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <dimen name="emps_default_icon_small_size">120dp</dimen>
+    <dimen name="emps_default_icon_normal_size">180dp</dimen>
+    <dimen name="emps_default_icon_big_size">250dp</dimen>
+
     <dimen name="emps_default_text_size">14sp</dimen>
     <dimen name="emps_default_button_text_size">16sp</dimen>
 
