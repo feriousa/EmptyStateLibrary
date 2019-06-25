@@ -11,11 +11,10 @@
 			android:layout_height="@dimen/emps_default_icon_small_size"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
-			android:id="@+id/appCompatImageView"
-			app:layout_constraintHorizontal_bias="0.549"
+			android:id="@+id/emptyStateIcon"
 			app:layout_constraintTop_toTopOf="parent"
 			app:layout_constraintBottom_toBottomOf="parent"
-			app:layout_constraintVertical_bias="0.4"/>
+			app:layout_constraintVertical_bias="0.35"/>
 
 
 	<TextView
@@ -25,26 +24,30 @@
 			android:textSize="@dimen/emps_default_text_size"
 			android:gravity="center"
 			tools:text="Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lipsum generator."
-			android:id="@+id/textView"
+			android:id="@+id/emptyStateText"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintHorizontal_bias="0.0"
-			app:layout_constraintTop_toBottomOf="@+id/appCompatImageView"
-			android:layout_marginTop="32dp"/>
+			app:layout_constraintTop_toBottomOf="@+id/emptyStateIcon"
+			android:layout_marginTop="8dp"
+			android:layout_marginRight="8dp"
+			android:layout_marginEnd="8dp"
+			android:layout_marginLeft="8dp"
+			android:layout_marginStart="8dp"/>
 
 	<com.google.android.material.button.MaterialButton
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:textSize="@dimen/emps_default_button_text_size"
 			app:cornerRadius="@dimen/emps_default_button_corner_size"
+			android:theme="@style/Theme.MaterialComponents.Light"
 			app:backgroundTint="@color/emps_default_button_color"
 			tools:text="button action"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
-			android:id="@+id/materialButton"
-			app:layout_constraintHorizontal_bias="0.562"
-			app:layout_constraintTop_toBottomOf="@+id/textView"
-			android:layout_marginTop="24dp"/>
+			android:id="@+id/emptyStateButton"
+			app:layout_constraintTop_toBottomOf="@+id/emptyStateText"
+			android:layout_marginTop="16dp"
+			android:visibility="gone"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
