@@ -9,11 +9,17 @@
             <enum name="BIG" value="2"/>
         </attr>
         <attr name="emps_icon" format="reference"/>
-        <attr name="emps_text" format="string"/>
-        <attr name="emps_textSize" format="dimension"/>
-        <attr name="emps_textColor" format="color"/>
+        <attr name="emps_title" format="string"/>
+        <attr name="emps_titleFontPath" format="string"/>
+        <attr name="emps_titleSize" format="dimension"/>
+        <attr name="emps_titleColor" format="color"/>
+        <attr name="emps_description" format="string"/>
+        <attr name="emps_descriptionFontPath" format="string"/>
+        <attr name="emps_descriptionSize" format="dimension"/>
+        <attr name="emps_descriptionColor" format="color"/>
         <attr name="emps_showButton" format="boolean"/>
         <attr name="emps_buttonText" format="string"/>
+        <attr name="emps_buttonFontPath" format="string"/>
         <attr name="emps_buttonTextColor" format="color"/>
         <attr name="emps_buttonTextSize" format="dimension"/>
         <attr name="emps_buttonBackgroundColor" format="reference"/>

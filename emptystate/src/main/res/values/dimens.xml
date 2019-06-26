@@ -5,8 +5,9 @@
     <dimen name="emps_default_icon_normal_size">180dp</dimen>
     <dimen name="emps_default_icon_big_size">250dp</dimen>
 
-    <dimen name="emps_default_text_size">14sp</dimen>
-    <dimen name="emps_default_button_text_size">16sp</dimen>
+    <dimen name="emps_default_title_size">18sp</dimen>
+    <dimen name="emps_default_description_size">14sp</dimen>
+    <dimen name="emps_default_button_text_size">18sp</dimen>
 
     <dimen name="emps_default_button_corner_size">25dp</dimen>
 

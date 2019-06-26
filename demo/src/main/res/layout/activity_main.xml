@@ -8,18 +8,17 @@
         tools:context=".MainActivity">
 
     <com.github.farzadfarazmand.emptystate.EmptyState
+            android:id="@+id/emptyStateSample"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="visible"
-            app:emps_iconSize="SMALL"
-            app:emps_icon="@mipmap/ic_launcher_round"
-            app:emps_text="this is a text just for testing and nothing else"
-            app:emps_textColor="@color/colorAccent"
-            app:emps_textSize="18sp"
+            app:emps_iconSize="NORMAL"
+            app:emps_icon="@drawable/ic_sad"
+            app:emps_title="No Internet Connection"
+            app:emps_description="Please check your internet connection"
             app:emps_showButton="true"
-            app:emps_buttonBackgroundColor="@color/colorPrimaryDark"
-            app:emps_buttonTextColor="@android:color/black"
-            android:onClick="testClick"
-            app:emps_buttonText="testing"/>
+            app:emps_buttonBackgroundColor="@color/colorAccent"
+            app:emps_buttonTextColor="@android:color/white"
+            app:emps_buttonText="Enable WiFi"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

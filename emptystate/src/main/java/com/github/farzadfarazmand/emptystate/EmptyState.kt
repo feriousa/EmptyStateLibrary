@@ -2,6 +2,8 @@ package com.github.farzadfarazmand.emptystate
 
 import android.content.Context
 import android.graphics.Color
+import android.graphics.Typeface
+import android.text.TextUtils
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
@@ -12,6 +14,7 @@ import androidx.annotation.*
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import kotlinx.android.synthetic.main.empty_state.view.*
 
 /**
@@ -21,18 +24,29 @@ import kotlinx.android.synthetic.main.empty_state.view.*
  */
 class EmptyState : ConstraintLayout {
 
+    //icon
     private var iconSize = IconSize.NORMAL
     private var icon = 0
-    private var text = ""
-    private var textSize = resources.getDimensionPixelSize(R.dimen.emps_default_text_size)
-    private var textColor = ContextCompat.getColor(context, R.color.emps_default_text_color)
-    private var showButton = false
+    //title
+    private var title = ""
+    private var titleSize = resources.getDimensionPixelSize(R.dimen.emps_default_title_size)
+    private var titleColor = ContextCompat.getColor(context, R.color.emps_default_title_color)
+    //description
+    private var description = ""
+    private var descriptionSize = resources.getDimensionPixelSize(R.dimen.emps_default_description_size)
+    private var descriptionColor = ContextCompat.getColor(context, R.color.emps_default_description_color)
+    //button
     private var buttonText = ""
+    private var showButton = false
     private var buttonTextColor = Color.WHITE
     private var buttonTextSize = resources.getDimensionPixelSize(R.dimen.emps_default_button_text_size)
     private var buttonBackgroundColor = ContextCompat.getColor(context, R.color.emps_default_button_color)
     private var buttonCornerSize = resources.getDimensionPixelSize(R.dimen.emps_default_button_corner_size)
     private var buttonClickListener: OnClickListener? = null
+    //get font path from attrs and set the typefaces
+    private var titleTypeface: Typeface? = null
+    private var descriptionTypeface: Typeface? = null
+    private var buttonTypeface: Typeface? = null
 
     constructor(context: Context?) : super(context) {
         initialView()
@@ -59,16 +73,32 @@ class EmptyState : ConstraintLayout {
         //icon
         icon = typedArray.getResourceId(R.styleable.EmptyState_emps_icon, 0)
         iconSize = IconSize.values()[typedArray.getInt(R.styleable.EmptyState_emps_iconSize, 1)]
+        //title
+        typedArray.getString(R.styleable.EmptyState_emps_title)?.let { title = it }
+        descriptionSize = typedArray.getDimensionPixelSize(
+            R.styleable.EmptyState_emps_titleSize,
+            resources.getDimensionPixelSize(R.dimen.emps_default_title_size)
+        )
+        descriptionColor = typedArray.getColor(
+            R.styleable.EmptyState_emps_titleColor,
+            ContextCompat.getColor(context, R.color.emps_default_title_color)
+        )
+        typedArray.getString(R.styleable.EmptyState_emps_titleFontPath)?.let {
+            titleTypeface = Typeface.createFromAsset(context.assets, it)
+        }
         //description
-        typedArray.getString(R.styleable.EmptyState_emps_text)?.let { text = it }
-        textSize = typedArray.getDimensionPixelSize(
-            R.styleable.EmptyState_emps_textSize,
-            resources.getDimensionPixelSize(R.dimen.emps_default_text_size)
+        typedArray.getString(R.styleable.EmptyState_emps_description)?.let { description = it }
+        descriptionSize = typedArray.getDimensionPixelSize(
+            R.styleable.EmptyState_emps_descriptionSize,
+            resources.getDimensionPixelSize(R.dimen.emps_default_description_size)
         )
-        textColor = typedArray.getColor(
-            R.styleable.EmptyState_emps_textColor,
-            ContextCompat.getColor(context, R.color.emps_default_text_color)
+        descriptionColor = typedArray.getColor(
+            R.styleable.EmptyState_emps_descriptionColor,
+            ContextCompat.getColor(context, R.color.emps_default_description_color)
         )
+        typedArray.getString(R.styleable.EmptyState_emps_descriptionFontPath)?.let {
+            descriptionTypeface = Typeface.createFromAsset(context.assets, it)
+        }
         //button
         showButton = typedArray.getBoolean(R.styleable.EmptyState_emps_showButton, false)
         typedArray.getString(R.styleable.EmptyState_emps_buttonText)?.let { buttonText = it }
@@ -88,6 +118,9 @@ class EmptyState : ConstraintLayout {
             R.styleable.EmptyState_emps_buttonCorner,
             resources.getDimensionPixelSize(R.dimen.emps_default_button_corner_size)
         )
+        typedArray.getString(R.styleable.EmptyState_emps_buttonFontPath)?.let {
+            buttonTypeface = Typeface.createFromAsset(context.assets, it)
+        }
         typedArray.recycle()
     }
 
@@ -95,10 +128,22 @@ class EmptyState : ConstraintLayout {
         //icon
         emptyStateIcon.setImageResource(icon)
         setIconSize(iconSize)
-        //text
-        emptyStateText.text = text
-        emptyStateText.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize.toFloat())
-        emptyStateText.setTextColor(textColor)
+        //title
+        if (!TextUtils.isEmpty(title))
+            emptyStateTitle.text = title
+        else
+            emptyStateTitle.visibility = View.GONE
+        titleTypeface?.let { emptyStateTitle.typeface = it }
+        emptyStateTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, titleSize.toFloat())
+        emptyStateTitle.setTextColor(titleColor)
+        //description
+        if (!TextUtils.isEmpty(description))
+            emptyStateDescription.text = description
+        else
+            emptyStateDescription.visibility = View.GONE
+        descriptionTypeface?.let { emptyStateDescription.typeface = it }
+        emptyStateDescription.setTextSize(TypedValue.COMPLEX_UNIT_PX, descriptionSize.toFloat())
+        emptyStateDescription.setTextColor(descriptionColor)
         //button
         if (showButton)
             emptyStateButton.visibility = View.VISIBLE
@@ -107,7 +152,7 @@ class EmptyState : ConstraintLayout {
         emptyStateButton.text = buttonText
         emptyStateButton.setTextColor(buttonTextColor)
         emptyStateButton.cornerRadius = buttonCornerSize
-        emptyStateButton.setBackgroundColor(buttonBackgroundColor)
+        DrawableCompat.setTint(emptyStateButton.background, buttonBackgroundColor)
 
         emptyStateButton.setOnClickListener {
             if (it.visibility == View.VISIBLE)
@@ -148,83 +193,165 @@ class EmptyState : ConstraintLayout {
     }
 
     /**
-     * set text resource id
+     * set title resource id
      * @param resourceId get a string resource id, R.string.something
      * @return instance of emptyState
      */
-    fun setText(@StringRes resourceId: Int): EmptyState {
-        text = context.getString(resourceId)
-        emptyStateText.text = text
+    fun setTitle(@StringRes resourceId: Int): EmptyState {
+        title = context.getString(resourceId)
+        emptyStateTitle.text = title
+        emptyStateTitle.visibility = View.VISIBLE
         return this
     }
 
     /**
-     * set plain text
+     * set plain title
      * @param text get a string, "something"
      * @return instance of emptyState
      */
-    fun setText(text: String): EmptyState {
-        this.text = text
-        emptyStateText.text = text
+    fun setTitle(text: String): EmptyState {
+        this.title = text
+        emptyStateTitle.text = text
+        emptyStateTitle.visibility = View.VISIBLE
         return this
     }
 
     /**
-     * set text color
+     * set title color
      * @param colorRes get color resource id, R.color.someColor
      * @return instance of emptyState
      */
-    fun setTextColorResource(@ColorRes colorRes: Int): EmptyState {
-        textColor = ContextCompat.getColor(context, colorRes)
-        emptyStateText.setTextColor(textColor)
+    fun setTitleColorResource(@ColorRes colorRes: Int): EmptyState {
+        titleColor = ContextCompat.getColor(context, colorRes)
+        emptyStateTitle.setTextColor(titleColor)
         return this
     }
 
     /**
-     * set text color
+     * set description color
      * @param color get color
      * @return instance of emptyState
      */
-    fun setTextColor(@ColorInt color: Int): EmptyState {
-        textColor = color
-        emptyStateText.setTextColor(color)
+    fun setTitleColor(@ColorInt color: Int): EmptyState {
+        titleColor = color
+        emptyStateTitle.setTextColor(color)
         return this
     }
 
     /**
-     * set text size
+     * set title size
      * @param dimenRes get dimension, R.dimen.someSize
      * @return instance of emptyState
      */
-    fun setTextSize(@DimenRes dimenRes: Int): EmptyState {
-        textSize = resources.getDimensionPixelSize(dimenRes)
-        emptyStateText.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize.toFloat())
+    fun setTitleSize(@DimenRes dimenRes: Int): EmptyState {
+        titleSize = resources.getDimensionPixelSize(dimenRes)
+        emptyStateTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, titleSize.toFloat())
         return this
     }
 
     /**
-     * set button text resource id
+     * set title typeface
+     * @param typeface
+     * @return instance of emptyState
+     */
+    fun setTitleTypeface(typeface: Typeface): EmptyState {
+        titleTypeface = typeface
+        emptyStateTitle.typeface = titleTypeface
+        return this
+    }
+
+
+    /**
+     * set description resource id
+     * @param resourceId get a string resource id, R.string.something
+     * @return instance of emptyState
+     */
+    fun setDescription(@StringRes resourceId: Int): EmptyState {
+        description = context.getString(resourceId)
+        emptyStateDescription.text = description
+        emptyStateDescription.visibility = View.VISIBLE
+        return this
+    }
+
+    /**
+     * set plain description
+     * @param text get a string, "something"
+     * @return instance of emptyState
+     */
+    fun setDescription(text: String): EmptyState {
+        this.description = text
+        emptyStateDescription.text = text
+        emptyStateDescription.visibility = View.VISIBLE
+        return this
+    }
+
+    /**
+     * set description color
+     * @param colorRes get color resource id, R.color.someColor
+     * @return instance of emptyState
+     */
+    fun setDescriptionColorResource(@ColorRes colorRes: Int): EmptyState {
+        descriptionColor = ContextCompat.getColor(context, colorRes)
+        emptyStateDescription.setTextColor(descriptionColor)
+        return this
+    }
+
+    /**
+     * set description color
+     * @param color get color
+     * @return instance of emptyState
+     */
+    fun setDescriptionColor(@ColorInt color: Int): EmptyState {
+        descriptionColor = color
+        emptyStateDescription.setTextColor(color)
+        return this
+    }
+
+    /**
+     * set description size
+     * @param dimenRes get dimension, R.dimen.someSize
+     * @return instance of emptyState
+     */
+    fun setDescriptionSize(@DimenRes dimenRes: Int): EmptyState {
+        descriptionSize = resources.getDimensionPixelSize(dimenRes)
+        emptyStateDescription.setTextSize(TypedValue.COMPLEX_UNIT_PX, descriptionSize.toFloat())
+        return this
+    }
+
+    /**
+     * set description typeface
+     * @param typeface
+     * @return instance of emptyState
+     */
+    fun setDescriptionTypeface(typeface: Typeface): EmptyState {
+        descriptionTypeface = typeface
+        emptyStateDescription.typeface = descriptionTypeface
+        return this
+    }
+
+    /**
+     * set button description resource id
      * @param resourceId get a string resource id, R.string.something
      * @return instance of emptyState
      */
     fun setButtonText(@StringRes resourceId: Int): EmptyState {
         buttonText = context.getString(resourceId)
-        emptyStateText.text = text
-        //because it has text and can't be GONE
+        emptyStateDescription.text = description
+        //because it has description and can't be GONE
         showButton = true
         emptyStateButton.visibility = View.VISIBLE
         return this
     }
 
     /**
-     * set plain button text
+     * set plain button description
      * @param text get a string, "something"
      * @return instance of emptyState
      */
     fun setButtonText(text: String): EmptyState {
         buttonText = text
-        emptyStateText.text = text
-        //because it has text and can't be GONE
+        emptyStateDescription.text = text
+        //because it has description and can't be GONE
         showButton = true
         emptyStateButton.visibility = View.VISIBLE
         return this
@@ -237,7 +364,7 @@ class EmptyState : ConstraintLayout {
      */
     fun setButtonBackgroundColorResource(@ColorRes colorRes: Int): EmptyState {
         buttonBackgroundColor = ContextCompat.getColor(context, colorRes)
-        emptyStateButton.setBackgroundColor(buttonBackgroundColor)
+        DrawableCompat.setTint(emptyStateButton.background, buttonBackgroundColor)
         return this
     }
 
@@ -248,12 +375,12 @@ class EmptyState : ConstraintLayout {
      */
     fun setButtonBackgroundColor(@ColorInt color: Int): EmptyState {
         buttonBackgroundColor = color
-        emptyStateButton.setBackgroundColor(color)
+        DrawableCompat.setTint(emptyStateButton.background, buttonBackgroundColor)
         return this
     }
 
     /**
-     * set button text size
+     * set button description size
      * @param dimenRes get dimension, R.dimen.someSize
      * @return instance of emptyState
      */
@@ -271,6 +398,17 @@ class EmptyState : ConstraintLayout {
     fun setButtonCornerSize(@DimenRes dimenRes: Int): EmptyState {
         buttonCornerSize = resources.getDimensionPixelSize(dimenRes)
         emptyStateButton.cornerRadius = buttonCornerSize
+        return this
+    }
+
+    /**
+     * set button typeface
+     * @param typeface
+     * @return instance of emptyState
+     */
+    fun setButtonTypeface(typeface: Typeface): EmptyState {
+        buttonTypeface = typeface
+        emptyStateButton.typeface = buttonTypeface
         return this
     }
 
