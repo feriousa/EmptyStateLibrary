@@ -152,6 +152,7 @@ class EmptyState : ConstraintLayout {
         emptyStateButton.text = buttonText
         emptyStateButton.setTextColor(buttonTextColor)
         emptyStateButton.cornerRadius = buttonCornerSize
+        buttonTypeface?.let { emptyStateButton.typeface = it }
         DrawableCompat.setTint(emptyStateButton.background, buttonBackgroundColor)
 
         emptyStateButton.setOnClickListener {

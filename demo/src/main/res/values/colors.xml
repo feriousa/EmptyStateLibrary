@@ -5,4 +5,5 @@
     <color name="colorAccent">#CDDC39</color>
 
     <color name="primary_text_color">#212121</color>
+    <color name="button_bg_color">#009688</color>
 </resources>

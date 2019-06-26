@@ -25,7 +25,6 @@
             android:textSize="@dimen/emps_default_title_size"
             android:gravity="center"
             tools:text="Test Title"
-            android:textStyle="bold"
             android:id="@+id/emptyStateTitle"
             app:layout_constraintStart_toStartOf="@+id/leftGuideline"
             app:layout_constraintEnd_toStartOf="@+id/rightGuideline"
@@ -47,7 +46,6 @@
     <com.google.android.material.button.MaterialButton
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
             android:textSize="@dimen/emps_default_button_text_size"
             app:cornerRadius="@dimen/emps_default_button_corner_size"
             android:paddingRight="24dp"
