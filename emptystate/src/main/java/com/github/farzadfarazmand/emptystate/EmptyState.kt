@@ -33,15 +33,20 @@ class EmptyState : ConstraintLayout {
     private var titleColor = ContextCompat.getColor(context, R.color.emps_default_title_color)
     //description
     private var description = ""
-    private var descriptionSize = resources.getDimensionPixelSize(R.dimen.emps_default_description_size)
-    private var descriptionColor = ContextCompat.getColor(context, R.color.emps_default_description_color)
+    private var descriptionSize =
+        resources.getDimensionPixelSize(R.dimen.emps_default_description_size)
+    private var descriptionColor =
+        ContextCompat.getColor(context, R.color.emps_default_description_color)
     //button
     private var buttonText = ""
     private var showButton = false
     private var buttonTextColor = Color.WHITE
-    private var buttonTextSize = resources.getDimensionPixelSize(R.dimen.emps_default_button_text_size)
-    private var buttonBackgroundColor = ContextCompat.getColor(context, R.color.emps_default_button_color)
-    private var buttonCornerSize = resources.getDimensionPixelSize(R.dimen.emps_default_button_corner_size)
+    private var buttonTextSize =
+        resources.getDimensionPixelSize(R.dimen.emps_default_button_text_size)
+    private var buttonBackgroundColor =
+        ContextCompat.getColor(context, R.color.emps_default_button_color)
+    private var buttonCornerSize =
+        resources.getDimensionPixelSize(R.dimen.emps_default_button_corner_size)
     private var buttonClickListener: OnClickListener? = null
     //get font path from attrs and set the typefaces
     private var titleTypeface: Typeface? = null
@@ -57,7 +62,11 @@ class EmptyState : ConstraintLayout {
         initialView()
     }
 
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    ) {
         attrs?.let { handleAttribute(it) }
         initialView()
     }
@@ -151,6 +160,7 @@ class EmptyState : ConstraintLayout {
             emptyStateButton.visibility = View.GONE
         emptyStateButton.text = buttonText
         emptyStateButton.setTextColor(buttonTextColor)
+        emptyStateButton.setTextSize(TypedValue.COMPLEX_UNIT_PX, buttonTextSize.toFloat())
         emptyStateButton.cornerRadius = buttonCornerSize
         buttonTypeface?.let { emptyStateButton.typeface = it }
         DrawableCompat.setTint(emptyStateButton.background, buttonBackgroundColor)
