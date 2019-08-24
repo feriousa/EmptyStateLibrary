@@ -1,5 +1,7 @@
 package com.github.farzadfarazmand.emptystate
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Typeface
@@ -8,6 +10,7 @@ import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.view.animation.Interpolator
 import androidx.annotation.*
@@ -438,11 +441,22 @@ class EmptyState : ConstraintLayout {
      * @param animRes get animation resource, default is fade_in
      * @param interpolator get animation interpolator, default is AccelerateDecelerateInterpolator
      */
-    fun show(@AnimRes animRes: Int = R.anim.abc_fade_in, interpolator: Interpolator = AccelerateDecelerateInterpolator()) {
-        val fadeIn = AnimationUtils.loadAnimation(context, animRes)
-        fadeIn.interpolator = interpolator
-        startAnimation(fadeIn)
-        visibility = View.VISIBLE
+    fun show(@AnimRes animRes: Int = android.R.anim.fade_in, interpolator: Interpolator = AccelerateDecelerateInterpolator()) {
+        val animation = AnimationUtils.loadAnimation(context, animRes)
+        animation.interpolator = interpolator
+        animation.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationRepeat(animation: Animation?) {
+            }
+
+            override fun onAnimationEnd(animation: Animation?) {
+            }
+
+            override fun onAnimationStart(animation: Animation?) {
+                visibility = View.VISIBLE
+            }
+        })
+        startAnimation(animation)
+
     }
 
     /**
@@ -450,11 +464,21 @@ class EmptyState : ConstraintLayout {
      * @param animRes get animations resource, default is fade_out
      * @param interpolator get animation interpolator, default is AccelerateDecelerateInterpolator
      */
-    fun hide(@AnimRes animRes: Int = R.anim.abc_fade_out, interpolator: Interpolator = AccelerateDecelerateInterpolator()) {
-        val fadeOut = AnimationUtils.loadAnimation(context, animRes)
-        fadeOut.interpolator = interpolator
-        startAnimation(fadeOut)
-        visibility = View.INVISIBLE
+    fun hide(@AnimRes animRes: Int = android.R.anim.fade_out, interpolator: Interpolator = AccelerateDecelerateInterpolator()) {
+        val animation = AnimationUtils.loadAnimation(context, animRes)
+        animation.interpolator = interpolator
+        animation.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationRepeat(animation: Animation?) {
+            }
+
+            override fun onAnimationEnd(animation: Animation?) {
+                visibility = View.INVISIBLE
+            }
+
+            override fun onAnimationStart(animation: Animation?) {
+            }
+        })
+        startAnimation(animation)
     }
 
 }
