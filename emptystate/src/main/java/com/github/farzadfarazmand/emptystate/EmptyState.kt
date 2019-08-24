@@ -75,11 +75,11 @@ class EmptyState : ConstraintLayout {
         iconSize = IconSize.values()[typedArray.getInt(R.styleable.EmptyState_emps_iconSize, 1)]
         //title
         typedArray.getString(R.styleable.EmptyState_emps_title)?.let { title = it }
-        descriptionSize = typedArray.getDimensionPixelSize(
+        titleSize = typedArray.getDimensionPixelSize(
             R.styleable.EmptyState_emps_titleSize,
             resources.getDimensionPixelSize(R.dimen.emps_default_title_size)
         )
-        descriptionColor = typedArray.getColor(
+        titleColor = typedArray.getColor(
             R.styleable.EmptyState_emps_titleColor,
             ContextCompat.getColor(context, R.color.emps_default_title_color)
         )

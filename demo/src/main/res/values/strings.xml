@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">EmptyStateLibrary</string>
+    <string name="noInternet_title">No Internet Connection</string>
 </resources>
