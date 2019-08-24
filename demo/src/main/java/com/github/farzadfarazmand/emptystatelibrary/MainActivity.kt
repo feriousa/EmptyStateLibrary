@@ -3,6 +3,7 @@ package com.github.farzadfarazmand.emptystatelibrary
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
+import android.view.animation.OvershootInterpolator
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -24,6 +25,7 @@ class MainActivity : AppCompatActivity() {
             ).show()
         })
         // show emptyState with animation
-        Handler().postDelayed({ emptyStateSample.show() }, 3000)
+        Handler().postDelayed({ emptyStateSample.show(android.R.anim.slide_in_left, OvershootInterpolator()) }, 3000)
+        Handler().postDelayed({ emptyStateSample.hide(android.R.anim.slide_out_right, OvershootInterpolator()) }, 6000)
     }
 }
