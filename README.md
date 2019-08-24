@@ -28,7 +28,7 @@ dependencies {
     .
     .
     .
-    implementation 'com.github.farzadfarazmand:EmptyStateLibrary:v1.0.0'
+    implementation 'com.github.farzadfarazmand:EmptyStateLibrary:v1.0.1'
 }
 ```
 
