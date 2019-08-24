@@ -1,85 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
     <!--icon-->
-    <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="@dimen/emps_default_icon_small_size"
-            android:layout_height="@dimen/emps_default_icon_small_size"
-            app:layout_constraintStart_toStartOf="@+id/leftGuideline"
-            android:id="@+id/emptyStateIcon"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0.35"
-            app:layout_constraintEnd_toStartOf="@+id/rightGuideline"/>
 
     <!--title-->
+    <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/emptyStateIcon"
+            android:layout_width="@dimen/emps_default_icon_small_size"
+            android:layout_height="@dimen/emps_default_icon_small_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/rightGuideline"
+            app:layout_constraintHorizontal_bias="0.494"
+            app:layout_constraintStart_toStartOf="@+id/leftGuideline"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.30" />
+
     <TextView
+            android:id="@+id/emptyStateTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:gravity="center"
             android:textColor="@color/emps_default_title_color"
             android:textSize="@dimen/emps_default_title_size"
-            android:gravity="center"
-            tools:text="Test Title"
-            android:id="@+id/emptyStateTitle"
-            app:layout_constraintStart_toStartOf="@+id/leftGuideline"
             app:layout_constraintEnd_toStartOf="@+id/rightGuideline"
+            app:layout_constraintStart_toStartOf="@+id/leftGuideline"
             app:layout_constraintTop_toBottomOf="@+id/emptyStateIcon"
-            android:layout_marginTop="32dp"/>
+            tools:text="Test Title" />
     <!--description-->
     <TextView
+            android:id="@+id/emptyStateDescription"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:textColor="@color/emps_default_description_color"
             android:textSize="@dimen/emps_default_description_size"
-            android:gravity="center"
-            tools:text="Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lipsum generator."
-            android:id="@+id/emptyStateDescription"
-            app:layout_constraintStart_toStartOf="@+id/leftGuideline"
             app:layout_constraintEnd_toStartOf="@+id/rightGuideline"
-            app:layout_constraintTop_toBottomOf="@+id/emptyStateTitle"/>
+            app:layout_constraintStart_toStartOf="@+id/leftGuideline"
+            app:layout_constraintTop_toBottomOf="@+id/emptyStateTitle"
+            tools:text="Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lipsum generator." />
 
     <com.google.android.material.button.MaterialButton
+            android:id="@+id/emptyStateButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/emps_default_button_text_size"
-            app:cornerRadius="@dimen/emps_default_button_corner_size"
-            android:paddingRight="24dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
             android:paddingLeft="24dp"
             android:paddingTop="12dp"
+            android:paddingRight="24dp"
             android:paddingBottom="12dp"
-            android:theme="@style/Theme.MaterialComponents.Light"
-            app:backgroundTint="@color/emps_default_button_color"
-            tools:text="button action"
-            app:layout_constraintStart_toStartOf="@+id/leftGuideline"
-            android:id="@+id/emptyStateButton"
-            app:layout_constraintTop_toBottomOf="@+id/emptyStateDescription"
-            android:layout_marginTop="32dp"
-            android:visibility="visible"
-            app:layout_constraintEnd_toStartOf="@+id/rightGuideline"
-            android:layout_marginRight="16dp"
-            android:layout_marginEnd="16dp"
             android:textAllCaps="false"
-            android:layout_marginLeft="16dp"
-            android:layout_marginStart="16dp"/>
+            android:textSize="@dimen/emps_default_button_text_size"
+            android:theme="@style/Theme.MaterialComponents.Light"
+            android:visibility="visible"
+            app:backgroundTint="@color/emps_default_button_color"
+            app:cornerRadius="@dimen/emps_default_button_corner_size"
+            app:layout_constraintEnd_toStartOf="@+id/rightGuideline"
+            app:layout_constraintStart_toStartOf="@+id/leftGuideline"
+            app:layout_constraintTop_toBottomOf="@+id/emptyStateDescription"
+            tools:text="button action" />
 
     <androidx.constraintlayout.widget.Guideline
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/leftGuideline"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.15"/>
-
-    <androidx.constraintlayout.widget.Guideline
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/rightGuideline"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.85"/>
+            app:layout_constraintGuide_percent="0.15" />
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/rightGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.85" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

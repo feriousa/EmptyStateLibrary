@@ -2,21 +2,24 @@
 <resources>
 
     <declare-styleable name="EmptyState">
-
+        <!--icon-->
         <attr name="emps_iconSize" format="enum">
             <enum name="SMALL" value="0"/>
             <enum name="NORMAL" value="1"/>
             <enum name="BIG" value="2"/>
         </attr>
         <attr name="emps_icon" format="reference"/>
+        <!--title-->
         <attr name="emps_title" format="string"/>
         <attr name="emps_titleFontPath" format="string"/>
         <attr name="emps_titleSize" format="dimension"/>
         <attr name="emps_titleColor" format="color"/>
+        <!--description-->
         <attr name="emps_description" format="string"/>
         <attr name="emps_descriptionFontPath" format="string"/>
         <attr name="emps_descriptionSize" format="dimension"/>
         <attr name="emps_descriptionColor" format="color"/>
+        <!--button-->
         <attr name="emps_showButton" format="boolean"/>
         <attr name="emps_buttonText" format="string"/>
         <attr name="emps_buttonFontPath" format="string"/>
