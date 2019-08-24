@@ -3,6 +3,13 @@ An Android Library for showing different states of view
 
 ![Images](https://github.com/farzadfarazmand/EmptyStateLibrary/blob/master/preview.png)
 
+## Features
+- [x] MinSdk 14
+- [x] Support both PNG and SVG as icon
+- [x] Could use different custom fonts for title, description and button  
+- [x] Support both PNG and SVG as icon
+- [x] Easy to use
+
 ### Add Library
 
 1. Add the JitPack repository to your build file
@@ -29,29 +36,53 @@ dependencies {
 
 ```xml
 <com.github.farzadfarazmand.emptystate.EmptyState
-        android:id="@+id/emptyStateSample"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="invisible"
-        app:emps_iconSize="NORMAL"
-        app:emps_icon="@drawable/ic_sad"
-        app:emps_title="No Internet Connection"
-        app:emps_titleFontPath="fonts/Montserrat_Bold.ttf"
-        app:emps_buttonFontPath="fonts/Montserrat_Bold.ttf"
-        app:emps_descriptionFontPath="fonts/Montserrat_Regular.ttf"
-        app:emps_description="Please check your internet connection"
-        app:emps_showButton="true"
-        app:emps_buttonBackgroundColor="@color/button_bg_color"
-        app:emps_buttonTextColor="@android:color/white"
-        app:emps_buttonText="Enable WiFi"/>
+            android:id="@+id/emptyStateSample"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible"
+            app:emps_iconSize="SMALL"
+            app:emps_icon="@drawable/ic_sad"
+            app:emps_title="@string/noInternet_title"
+            app:emps_titleFontPath="fonts/Montserrat_Bold.ttf"
+            app:emps_descriptionFontPath="fonts/Montserrat_Regular.ttf"
+            app:emps_description="Please check your internet connection"
+            app:emps_showButton="true"
+            app:emps_buttonFontPath="fonts/Montserrat_Bold.ttf"
+            app:emps_buttonText="Enable WiFi"
+            app:emps_buttonCorner="5dp"/>
 ```
-### xml variables
+### All xml attributes
 Key | Value | Description
 --- | ----- | ---
 emps_iconSize | SMALL, NORMALL, BIG | size of icon
 emps_icon | icon resource id | could be png or vector drawable
-emps_title | String | emptyState title, shown below image 
-emps_titleFontPath | String | title font
-emps_titleSize | Dimention | title text size, Dp or Sp
-emps_titleColor | Color | title text color
+emps_title | String | emptyState title, will be gone if not set 
+emps_titleFontPath | String | title font's path
+emps_titleSize | Dimension | title text size, dp or sp
+emps_titleColor | Color | title text color, Hex ot color reference
+emps_description     | String | emptyState description, will be gone if not set 
+emps_descriptionFontPath | String | title font's path
+emps_descriptionSize | Dimension | title text size, dp or sp
+emps_descriptionColor | Color | title text color, Hex or color reference
+emps_showButton | Boolean | show / hide button 
+emps_buttonText | String | button's text
+emps_buttonFontPath | String | button text font's path
+emps_buttonTextSize | Dimension | button text size, dp or sp
+emps_buttonTextColor | Color | button text color, Hex ot color reference
+emps_buttonBackgroundColor | Color | button background color, Hex ot color reference
+emps_buttonCorner | Dimension | button corner size in dp
 
+_**All of these attributes have setters and could be set from code**_
+
+### Show / Hide with animation
+You could show or hide emptyState view with animation:
+```kotlin
+    val emptyStateSample = findViewById(R.id.emptyStateSample)
+    
+    //show, default animation is fade in 
+    emptyStateSample.show(android.R.anim.slide_in_left, OvershootInterpolator())
+    
+    
+    //hide, default animation is fade out
+    emptyStateSample.show(android.R.anim.slide_out_right, OvershootInterpolator())
+```
