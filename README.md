@@ -15,11 +15,10 @@ An Android Library for showing different states of a view
 1. Add the JitPack repository to your build file
 ```groovy
 allprojects {
-		repositories {
-			...
-			maven { url 'https://jitpack.io' }
-		}
-	}
+    repositories {
+        maven { url 'https://jitpack.io' }
+    }
+}
 ```
 
 2. Add the dependency
