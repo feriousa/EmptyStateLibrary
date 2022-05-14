@@ -14,6 +14,7 @@
             android:visibility="invisible"
             app:emps_iconSize="SMALL"
             app:emps_icon="@drawable/ic_sad"
+            app:emps_fullscreen="true"
             app:emps_title="@string/noInternet_title"
             app:emps_titleFontPath="fonts/Montserrat_Bold.ttf"
             app:emps_descriptionFontPath="fonts/Montserrat_Regular.ttf"
@@ -21,6 +22,7 @@
             app:emps_showButton="true"
             app:emps_buttonFontPath="fonts/Montserrat_Bold.ttf"
             app:emps_buttonText="Enable WiFi"
-            app:emps_buttonCorner="5dp"/>
+            app:emps_buttonBackgroundColor="@color/colorPrimary"
+            app:emps_buttonCorner="50dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,31 +6,37 @@
         android:layout_height="match_parent">
 
     <!--icon-->
-
-    <!--title-->
     <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/emptyStateIcon"
             android:layout_width="@dimen/emps_default_icon_small_size"
             android:layout_height="@dimen/emps_default_icon_small_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/rightGuideline"
-            app:layout_constraintHorizontal_bias="0.494"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@+id/leftGuideline"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.30" />
+            app:layout_constraintVertical_bias="0.35" />
 
+    <!--background-->
+    <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/emptyStateBg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    <!--title-->
     <TextView
             android:id="@+id/emptyStateTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginBottom="16dp"
             android:gravity="center"
             android:textColor="@color/emps_default_title_color"
             android:textSize="@dimen/emps_default_title_size"
             app:layout_constraintEnd_toStartOf="@+id/rightGuideline"
             app:layout_constraintStart_toStartOf="@+id/leftGuideline"
-            app:layout_constraintTop_toBottomOf="@+id/emptyStateIcon"
+            app:layout_constraintBottom_toTopOf="@+id/emptyStateDescription"
             tools:text="Test Title" />
+
     <!--description-->
     <TextView
             android:id="@+id/emptyStateDescription"
@@ -41,12 +47,13 @@
             android:textSize="@dimen/emps_default_description_size"
             app:layout_constraintEnd_toStartOf="@+id/rightGuideline"
             app:layout_constraintStart_toStartOf="@+id/leftGuideline"
-            app:layout_constraintTop_toBottomOf="@+id/emptyStateTitle"
+            app:layout_constraintBottom_toTopOf="@+id/emptyStateButton"
+            android:layout_marginBottom="32dp"
             tools:text="Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lipsum generator." />
 
     <com.google.android.material.button.MaterialButton
             android:id="@+id/emptyStateButton"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:paddingLeft="24dp"
@@ -61,7 +68,8 @@
             app:cornerRadius="@dimen/emps_default_button_corner_size"
             app:layout_constraintEnd_toStartOf="@+id/rightGuideline"
             app:layout_constraintStart_toStartOf="@+id/leftGuideline"
-            app:layout_constraintTop_toBottomOf="@+id/emptyStateDescription"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="32dp"
             tools:text="button action" />
 
     <androidx.constraintlayout.widget.Guideline

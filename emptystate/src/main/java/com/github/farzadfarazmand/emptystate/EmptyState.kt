@@ -1,7 +1,5 @@
 package com.github.farzadfarazmand.emptystate
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Typeface
@@ -30,16 +28,20 @@ class EmptyState : ConstraintLayout {
     //icon
     private var iconSize = IconSize.NORMAL
     private var icon = 0
+    private var isFullScreen = false
+
     //title
     private var title = ""
     private var titleSize = resources.getDimensionPixelSize(R.dimen.emps_default_title_size)
     private var titleColor = ContextCompat.getColor(context, R.color.emps_default_title_color)
+
     //description
     private var description = ""
     private var descriptionSize =
         resources.getDimensionPixelSize(R.dimen.emps_default_description_size)
     private var descriptionColor =
         ContextCompat.getColor(context, R.color.emps_default_description_color)
+
     //button
     private var buttonText = ""
     private var showButton = false
@@ -51,6 +53,7 @@ class EmptyState : ConstraintLayout {
     private var buttonCornerSize =
         resources.getDimensionPixelSize(R.dimen.emps_default_button_corner_size)
     private var buttonClickListener: OnClickListener? = null
+
     //get font path from attrs and set the typefaces
     private var titleTypeface: Typeface? = null
     private var descriptionTypeface: Typeface? = null
@@ -85,6 +88,7 @@ class EmptyState : ConstraintLayout {
         //icon
         icon = typedArray.getResourceId(R.styleable.EmptyState_emps_icon, 0)
         iconSize = IconSize.values()[typedArray.getInt(R.styleable.EmptyState_emps_iconSize, 1)]
+        isFullScreen = typedArray.getBoolean(R.styleable.EmptyState_emps_fullscreen, false)
         //title
         typedArray.getString(R.styleable.EmptyState_emps_title)?.let { title = it }
         titleSize = typedArray.getDimensionPixelSize(
@@ -138,8 +142,7 @@ class EmptyState : ConstraintLayout {
 
     private fun initialView() {
         //icon
-        emptyStateIcon.setImageResource(icon)
-        setIconSize(iconSize)
+        setIcon(icon)
         //title
         if (!TextUtils.isEmpty(title))
             emptyStateTitle.text = title
@@ -180,7 +183,24 @@ class EmptyState : ConstraintLayout {
      * @return instance of emptyState
      */
     fun setIcon(@DrawableRes resourceId: Int): EmptyState {
-        emptyStateIcon.setImageResource(resourceId)
+        if (isFullScreen) {
+            emptyStateBg.setImageResource(resourceId)
+            emptyStateIcon.visibility = View.INVISIBLE
+            emptyStateBg.visibility = View.VISIBLE
+        } else {
+            emptyStateIcon.setImageResource(resourceId)
+            emptyStateBg.visibility = View.INVISIBLE
+            emptyStateIcon.visibility = View.VISIBLE
+        }
+        return this
+    }
+
+    /**
+     * set fullscreen state, must be called before set icon!
+     *
+     */
+    fun isFullScreen(isFullscreen: Boolean): EmptyState {
+        this.isFullScreen = isFullscreen
         return this
     }
 
@@ -441,7 +461,10 @@ class EmptyState : ConstraintLayout {
      * @param animRes get animation resource, default is fade_in
      * @param interpolator get animation interpolator, default is AccelerateDecelerateInterpolator
      */
-    fun show(@AnimRes animRes: Int = android.R.anim.fade_in, interpolator: Interpolator = AccelerateDecelerateInterpolator()) {
+    fun show(
+        @AnimRes animRes: Int = android.R.anim.fade_in,
+        interpolator: Interpolator = AccelerateDecelerateInterpolator()
+    ) {
         val animation = AnimationUtils.loadAnimation(context, animRes)
         animation.interpolator = interpolator
         animation.setAnimationListener(object : Animation.AnimationListener {
@@ -464,7 +487,10 @@ class EmptyState : ConstraintLayout {
      * @param animRes get animations resource, default is fade_out
      * @param interpolator get animation interpolator, default is AccelerateDecelerateInterpolator
      */
-    fun hide(@AnimRes animRes: Int = android.R.anim.fade_out, interpolator: Interpolator = AccelerateDecelerateInterpolator()) {
+    fun hide(
+        @AnimRes animRes: Int = android.R.anim.fade_out,
+        interpolator: Interpolator = AccelerateDecelerateInterpolator()
+    ) {
         val animation = AnimationUtils.loadAnimation(context, animRes)
         animation.interpolator = interpolator
         animation.setAnimationListener(object : Animation.AnimationListener {

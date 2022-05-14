@@ -9,6 +9,7 @@
             <enum name="BIG" value="2"/>
         </attr>
         <attr name="emps_icon" format="reference"/>
+        <attr name="emps_fullscreen" format="boolean"/>
         <!--title-->
         <attr name="emps_title" format="string"/>
         <attr name="emps_titleFontPath" format="string"/>

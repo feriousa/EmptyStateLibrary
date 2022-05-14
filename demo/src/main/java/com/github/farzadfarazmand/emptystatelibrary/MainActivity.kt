@@ -26,6 +26,6 @@ class MainActivity : AppCompatActivity() {
         })
         // show emptyState with animation
         Handler().postDelayed({ emptyStateSample.show(android.R.anim.slide_in_left, OvershootInterpolator()) }, 3000)
-        Handler().postDelayed({ emptyStateSample.hide(android.R.anim.slide_out_right, OvershootInterpolator()) }, 6000)
+//        Handler().postDelayed({ emptyStateSample.hide(android.R.anim.slide_out_right, OvershootInterpolator()) }, 6000)
     }
 }
