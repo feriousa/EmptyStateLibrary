@@ -7,7 +7,7 @@ An Android Library for showing different states of a view
 - [x] MinSdk 14
 - [x] Support both PNG and SVG as icon
 - [x] Could use different custom fonts for title, description and button  
-- [x] Support both PNG and SVG as icon
+- [x] Fullscreen mode
 - [x] Easy to use
 
 ### Add Library
@@ -27,7 +27,7 @@ dependencies {
     .
     .
     .
-    implementation 'com.github.farzadfarazmand:EmptyStateLibrary:v1.0.1'
+    implementation 'com.github.farzadfarazmand:EmptyStateLibrary:v1.1.0'
 }
 ```
 
@@ -41,6 +41,7 @@ dependencies {
             android:visibility="invisible"
             app:emps_iconSize="SMALL"
             app:emps_icon="@drawable/ic_sad"
+            app:emps_fullscreen="true"
             app:emps_title="@string/noInternet_title"
             app:emps_titleFontPath="fonts/Montserrat_Bold.ttf"
             app:emps_descriptionFontPath="fonts/Montserrat_Regular.ttf"
@@ -55,6 +56,7 @@ Key | Value | Description
 --- | ----- | ---
 emps_iconSize | SMALL, NORMALL, BIG | size of icon
 emps_icon | icon resource id | could be png or vector drawable
+emps_fullscreen | Boolean | Show icon in fullscreen mode, icon size is useless in fullscreen
 emps_title | String | emptyState title, will be gone if not set 
 emps_titleFontPath | String | title font's path
 emps_titleSize | Dimension | title text size, dp or sp
@@ -83,7 +85,7 @@ You could show or hide emptyState view with animation:
     
     
     //hide, default animation is fade out
-    emptyStateSample.show(android.R.anim.slide_out_right, OvershootInterpolator())
+    emptyStateSample.hide(android.R.anim.slide_out_right, OvershootInterpolator())
 ```
 
 ## Licenses
