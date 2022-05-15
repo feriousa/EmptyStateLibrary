@@ -6,6 +6,7 @@ import android.graphics.Typeface
 import android.text.TextUtils
 import android.util.AttributeSet
 import android.util.TypedValue
+import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.Animation
@@ -16,7 +17,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
-import kotlinx.android.synthetic.main.empty_state.view.*
+import com.github.farzadfarazmand.emptystate.databinding.EmptyStateBinding
 
 /**
  * Show different state of views, like noInternetConnection, noListData, notLogin, permissionNotGranted and ....
@@ -24,6 +25,8 @@ import kotlinx.android.synthetic.main.empty_state.view.*
  * https://github.com/farzadfarazmand/EmptyStateLibrary
  */
 class EmptyState : ConstraintLayout {
+
+    private val binding: EmptyStateBinding
 
     //icon
     private var iconSize = IconSize.NORMAL
@@ -59,16 +62,16 @@ class EmptyState : ConstraintLayout {
     private var descriptionTypeface: Typeface? = null
     private var buttonTypeface: Typeface? = null
 
-    constructor(context: Context?) : super(context) {
+    constructor(context: Context) : super(context) {
         initialView()
     }
 
-    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         attrs?.let { handleAttribute(it) }
         initialView()
     }
 
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
         context,
         attrs,
         defStyleAttr
@@ -79,7 +82,7 @@ class EmptyState : ConstraintLayout {
 
     init {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
-        View.inflate(context, R.layout.empty_state, this)
+        binding = EmptyStateBinding.inflate(LayoutInflater.from(context), this, true)
     }
 
     private fun handleAttribute(attrs: AttributeSet) {
@@ -141,39 +144,41 @@ class EmptyState : ConstraintLayout {
     }
 
     private fun initialView() {
-        //icon
-        setIcon(icon)
-        //title
-        if (!TextUtils.isEmpty(title))
-            emptyStateTitle.text = title
-        else
-            emptyStateTitle.visibility = View.GONE
-        titleTypeface?.let { emptyStateTitle.typeface = it }
-        emptyStateTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, titleSize.toFloat())
-        emptyStateTitle.setTextColor(titleColor)
-        //description
-        if (!TextUtils.isEmpty(description))
-            emptyStateDescription.text = description
-        else
-            emptyStateDescription.visibility = View.GONE
-        descriptionTypeface?.let { emptyStateDescription.typeface = it }
-        emptyStateDescription.setTextSize(TypedValue.COMPLEX_UNIT_PX, descriptionSize.toFloat())
-        emptyStateDescription.setTextColor(descriptionColor)
-        //button
-        if (showButton)
-            emptyStateButton.visibility = View.VISIBLE
-        else
-            emptyStateButton.visibility = View.GONE
-        emptyStateButton.text = buttonText
-        emptyStateButton.setTextColor(buttonTextColor)
-        emptyStateButton.setTextSize(TypedValue.COMPLEX_UNIT_PX, buttonTextSize.toFloat())
-        emptyStateButton.cornerRadius = buttonCornerSize
-        buttonTypeface?.let { emptyStateButton.typeface = it }
-        DrawableCompat.setTint(emptyStateButton.background, buttonBackgroundColor)
+        binding.apply {
+            //icon
+            setIcon(icon)
+            //title
+            if (!TextUtils.isEmpty(title))
+                emptyStateTitle.text = title
+            else
+                emptyStateTitle.visibility = View.GONE
+            titleTypeface?.let { emptyStateTitle.typeface = it }
+            emptyStateTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, titleSize.toFloat())
+            emptyStateTitle.setTextColor(titleColor)
+            //description
+            if (!TextUtils.isEmpty(description))
+                emptyStateDescription.text = description
+            else
+                emptyStateDescription.visibility = View.GONE
+            descriptionTypeface?.let { emptyStateDescription.typeface = it }
+            emptyStateDescription.setTextSize(TypedValue.COMPLEX_UNIT_PX, descriptionSize.toFloat())
+            emptyStateDescription.setTextColor(descriptionColor)
+            //button
+            if (showButton)
+                emptyStateButton.visibility = View.VISIBLE
+            else
+                emptyStateButton.visibility = View.GONE
+            emptyStateButton.text = buttonText
+            emptyStateButton.setTextColor(buttonTextColor)
+            emptyStateButton.setTextSize(TypedValue.COMPLEX_UNIT_PX, buttonTextSize.toFloat())
+            emptyStateButton.cornerRadius = buttonCornerSize
+            buttonTypeface?.let { emptyStateButton.typeface = it }
+            DrawableCompat.setTint(emptyStateButton.background, buttonBackgroundColor)
 
-        emptyStateButton.setOnClickListener {
-            if (it.visibility == View.VISIBLE)
-                buttonClickListener?.onClick(it)
+            emptyStateButton.setOnClickListener {
+                if (it.visibility == View.VISIBLE)
+                    buttonClickListener?.onClick(it)
+            }
         }
     }
 
@@ -183,14 +188,16 @@ class EmptyState : ConstraintLayout {
      * @return instance of emptyState
      */
     fun setIcon(@DrawableRes resourceId: Int): EmptyState {
-        if (isFullScreen) {
-            emptyStateBg.setImageResource(resourceId)
-            emptyStateIcon.visibility = View.INVISIBLE
-            emptyStateBg.visibility = View.VISIBLE
-        } else {
-            emptyStateIcon.setImageResource(resourceId)
-            emptyStateBg.visibility = View.INVISIBLE
-            emptyStateIcon.visibility = View.VISIBLE
+        binding.apply {
+            if (isFullScreen) {
+                emptyStateBg.setImageResource(resourceId)
+                emptyStateIcon.visibility = View.INVISIBLE
+                emptyStateBg.visibility = View.VISIBLE
+            } else {
+                emptyStateIcon.setImageResource(resourceId)
+                emptyStateBg.visibility = View.INVISIBLE
+                emptyStateIcon.visibility = View.VISIBLE
+            }
         }
         return this
     }
@@ -221,8 +228,10 @@ class EmptyState : ConstraintLayout {
                 resources.getDimensionPixelSize(R.dimen.emps_default_icon_normal_size)
             }
         }
-        emptyStateIcon.layoutParams.height = size
-        emptyStateIcon.layoutParams.width = size
+        binding.apply {
+            emptyStateIcon.layoutParams.height = size
+            emptyStateIcon.layoutParams.width = size
+        }
         return this
     }
 
@@ -233,8 +242,10 @@ class EmptyState : ConstraintLayout {
      */
     fun setTitle(@StringRes resourceId: Int): EmptyState {
         title = context.getString(resourceId)
-        emptyStateTitle.text = title
-        emptyStateTitle.visibility = View.VISIBLE
+        binding.apply {
+            emptyStateTitle.text = title
+            emptyStateTitle.visibility = View.VISIBLE
+        }
         return this
     }
 
@@ -245,8 +256,10 @@ class EmptyState : ConstraintLayout {
      */
     fun setTitle(text: String): EmptyState {
         this.title = text
-        emptyStateTitle.text = text
-        emptyStateTitle.visibility = View.VISIBLE
+        binding.apply {
+            emptyStateTitle.text = text
+            emptyStateTitle.visibility = View.VISIBLE
+        }
         return this
     }
 
@@ -257,7 +270,7 @@ class EmptyState : ConstraintLayout {
      */
     fun setTitleColorResource(@ColorRes colorRes: Int): EmptyState {
         titleColor = ContextCompat.getColor(context, colorRes)
-        emptyStateTitle.setTextColor(titleColor)
+        binding.emptyStateTitle.setTextColor(titleColor)
         return this
     }
 
@@ -268,7 +281,7 @@ class EmptyState : ConstraintLayout {
      */
     fun setTitleColor(@ColorInt color: Int): EmptyState {
         titleColor = color
-        emptyStateTitle.setTextColor(color)
+        binding.emptyStateTitle.setTextColor(color)
         return this
     }
 
@@ -279,7 +292,7 @@ class EmptyState : ConstraintLayout {
      */
     fun setTitleSize(@DimenRes dimenRes: Int): EmptyState {
         titleSize = resources.getDimensionPixelSize(dimenRes)
-        emptyStateTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, titleSize.toFloat())
+        binding.emptyStateTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, titleSize.toFloat())
         return this
     }
 
@@ -290,7 +303,7 @@ class EmptyState : ConstraintLayout {
      */
     fun setTitleTypeface(typeface: Typeface): EmptyState {
         titleTypeface = typeface
-        emptyStateTitle.typeface = titleTypeface
+        binding.emptyStateTitle.typeface = titleTypeface
         return this
     }
 
@@ -302,8 +315,8 @@ class EmptyState : ConstraintLayout {
      */
     fun setDescription(@StringRes resourceId: Int): EmptyState {
         description = context.getString(resourceId)
-        emptyStateDescription.text = description
-        emptyStateDescription.visibility = View.VISIBLE
+        binding.emptyStateDescription.text = description
+        binding.emptyStateDescription.visibility = View.VISIBLE
         return this
     }
 
@@ -314,8 +327,8 @@ class EmptyState : ConstraintLayout {
      */
     fun setDescription(text: String): EmptyState {
         this.description = text
-        emptyStateDescription.text = text
-        emptyStateDescription.visibility = View.VISIBLE
+        binding.emptyStateDescription.text = text
+        binding.emptyStateDescription.visibility = View.VISIBLE
         return this
     }
 
@@ -326,7 +339,7 @@ class EmptyState : ConstraintLayout {
      */
     fun setDescriptionColorResource(@ColorRes colorRes: Int): EmptyState {
         descriptionColor = ContextCompat.getColor(context, colorRes)
-        emptyStateDescription.setTextColor(descriptionColor)
+        binding.emptyStateDescription.setTextColor(descriptionColor)
         return this
     }
 
@@ -337,7 +350,7 @@ class EmptyState : ConstraintLayout {
      */
     fun setDescriptionColor(@ColorInt color: Int): EmptyState {
         descriptionColor = color
-        emptyStateDescription.setTextColor(color)
+        binding.emptyStateDescription.setTextColor(color)
         return this
     }
 
@@ -348,7 +361,7 @@ class EmptyState : ConstraintLayout {
      */
     fun setDescriptionSize(@DimenRes dimenRes: Int): EmptyState {
         descriptionSize = resources.getDimensionPixelSize(dimenRes)
-        emptyStateDescription.setTextSize(TypedValue.COMPLEX_UNIT_PX, descriptionSize.toFloat())
+        binding.emptyStateDescription.setTextSize(TypedValue.COMPLEX_UNIT_PX, descriptionSize.toFloat())
         return this
     }
 
@@ -359,7 +372,7 @@ class EmptyState : ConstraintLayout {
      */
     fun setDescriptionTypeface(typeface: Typeface): EmptyState {
         descriptionTypeface = typeface
-        emptyStateDescription.typeface = descriptionTypeface
+        binding.emptyStateDescription.typeface = descriptionTypeface
         return this
     }
 
@@ -370,10 +383,10 @@ class EmptyState : ConstraintLayout {
      */
     fun setButtonText(@StringRes resourceId: Int): EmptyState {
         buttonText = context.getString(resourceId)
-        emptyStateDescription.text = description
+        binding.emptyStateDescription.text = description
         //because it has description and can't be GONE
         showButton = true
-        emptyStateButton.visibility = View.VISIBLE
+        binding.emptyStateButton.visibility = View.VISIBLE
         return this
     }
 
@@ -384,10 +397,10 @@ class EmptyState : ConstraintLayout {
      */
     fun setButtonText(text: String): EmptyState {
         buttonText = text
-        emptyStateDescription.text = text
+        binding.emptyStateDescription.text = text
         //because it has description and can't be GONE
         showButton = true
-        emptyStateButton.visibility = View.VISIBLE
+        binding.emptyStateButton.visibility = View.VISIBLE
         return this
     }
 
@@ -398,7 +411,7 @@ class EmptyState : ConstraintLayout {
      */
     fun setButtonBackgroundColorResource(@ColorRes colorRes: Int): EmptyState {
         buttonBackgroundColor = ContextCompat.getColor(context, colorRes)
-        DrawableCompat.setTint(emptyStateButton.background, buttonBackgroundColor)
+        DrawableCompat.setTint(binding.emptyStateButton.background, buttonBackgroundColor)
         return this
     }
 
@@ -409,7 +422,7 @@ class EmptyState : ConstraintLayout {
      */
     fun setButtonBackgroundColor(@ColorInt color: Int): EmptyState {
         buttonBackgroundColor = color
-        DrawableCompat.setTint(emptyStateButton.background, buttonBackgroundColor)
+        DrawableCompat.setTint(binding.emptyStateButton.background, buttonBackgroundColor)
         return this
     }
 
@@ -420,7 +433,7 @@ class EmptyState : ConstraintLayout {
      */
     fun setButtonTextSize(@DimenRes dimenRes: Int): EmptyState {
         buttonTextSize = resources.getDimensionPixelSize(dimenRes)
-        emptyStateButton.setTextSize(TypedValue.COMPLEX_UNIT_PX, buttonTextSize.toFloat())
+        binding.emptyStateButton.setTextSize(TypedValue.COMPLEX_UNIT_PX, buttonTextSize.toFloat())
         return this
     }
 
@@ -431,7 +444,7 @@ class EmptyState : ConstraintLayout {
      */
     fun setButtonCornerSize(@DimenRes dimenRes: Int): EmptyState {
         buttonCornerSize = resources.getDimensionPixelSize(dimenRes)
-        emptyStateButton.cornerRadius = buttonCornerSize
+        binding.emptyStateButton.cornerRadius = buttonCornerSize
         return this
     }
 
@@ -442,7 +455,7 @@ class EmptyState : ConstraintLayout {
      */
     fun setButtonTypeface(typeface: Typeface): EmptyState {
         buttonTypeface = typeface
-        emptyStateButton.typeface = buttonTypeface
+        binding.emptyStateButton.typeface = buttonTypeface
         return this
     }
 
