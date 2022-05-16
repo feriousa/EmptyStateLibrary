@@ -16,6 +16,7 @@ import androidx.annotation.*
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import com.github.farzadfarazmand.emptystate.databinding.EmptyStateBinding
 
@@ -57,10 +58,7 @@ class EmptyState : ConstraintLayout {
         resources.getDimensionPixelSize(R.dimen.emps_default_button_corner_size)
     private var buttonClickListener: OnClickListener? = null
 
-    //get font path from attrs and set the typefaces
-    private var titleTypeface: Typeface? = null
-    private var descriptionTypeface: Typeface? = null
-    private var buttonTypeface: Typeface? = null
+    private var typeface: Typeface? = null
 
     constructor(context: Context) : super(context) {
         initialView()
@@ -92,6 +90,13 @@ class EmptyState : ConstraintLayout {
         icon = typedArray.getResourceId(R.styleable.EmptyState_emps_icon, 0)
         iconSize = IconSize.values()[typedArray.getInt(R.styleable.EmptyState_emps_iconSize, 1)]
         isFullScreen = typedArray.getBoolean(R.styleable.EmptyState_emps_fullscreen, false)
+
+        //font
+        if (typedArray.hasValue(R.styleable.EmptyState_emps_font)) {
+            val fontId = typedArray.getResourceId(R.styleable.EmptyState_emps_font, -1)
+            typeface = ResourcesCompat.getFont(context, fontId)
+        }
+
         //title
         typedArray.getString(R.styleable.EmptyState_emps_title)?.let { title = it }
         titleSize = typedArray.getDimensionPixelSize(
@@ -102,9 +107,6 @@ class EmptyState : ConstraintLayout {
             R.styleable.EmptyState_emps_titleColor,
             ContextCompat.getColor(context, R.color.emps_default_title_color)
         )
-        typedArray.getString(R.styleable.EmptyState_emps_titleFontPath)?.let {
-            titleTypeface = Typeface.createFromAsset(context.assets, it)
-        }
         //description
         typedArray.getString(R.styleable.EmptyState_emps_description)?.let { description = it }
         descriptionSize = typedArray.getDimensionPixelSize(
@@ -115,9 +117,6 @@ class EmptyState : ConstraintLayout {
             R.styleable.EmptyState_emps_descriptionColor,
             ContextCompat.getColor(context, R.color.emps_default_description_color)
         )
-        typedArray.getString(R.styleable.EmptyState_emps_descriptionFontPath)?.let {
-            descriptionTypeface = Typeface.createFromAsset(context.assets, it)
-        }
         //button
         showButton = typedArray.getBoolean(R.styleable.EmptyState_emps_showButton, false)
         typedArray.getString(R.styleable.EmptyState_emps_buttonText)?.let { buttonText = it }
@@ -137,9 +136,6 @@ class EmptyState : ConstraintLayout {
             R.styleable.EmptyState_emps_buttonCorner,
             resources.getDimensionPixelSize(R.dimen.emps_default_button_corner_size)
         )
-        typedArray.getString(R.styleable.EmptyState_emps_buttonFontPath)?.let {
-            buttonTypeface = Typeface.createFromAsset(context.assets, it)
-        }
         typedArray.recycle()
     }
 
@@ -147,12 +143,15 @@ class EmptyState : ConstraintLayout {
         binding.apply {
             //icon
             setIcon(icon)
+
+            //font
+            typeface?.let { setTypeface(it) }
+
             //title
             if (!TextUtils.isEmpty(title))
                 emptyStateTitle.text = title
             else
                 emptyStateTitle.visibility = View.GONE
-            titleTypeface?.let { emptyStateTitle.typeface = it }
             emptyStateTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, titleSize.toFloat())
             emptyStateTitle.setTextColor(titleColor)
             //description
@@ -160,7 +159,6 @@ class EmptyState : ConstraintLayout {
                 emptyStateDescription.text = description
             else
                 emptyStateDescription.visibility = View.GONE
-            descriptionTypeface?.let { emptyStateDescription.typeface = it }
             emptyStateDescription.setTextSize(TypedValue.COMPLEX_UNIT_PX, descriptionSize.toFloat())
             emptyStateDescription.setTextColor(descriptionColor)
             //button
@@ -172,7 +170,6 @@ class EmptyState : ConstraintLayout {
             emptyStateButton.setTextColor(buttonTextColor)
             emptyStateButton.setTextSize(TypedValue.COMPLEX_UNIT_PX, buttonTextSize.toFloat())
             emptyStateButton.cornerRadius = buttonCornerSize
-            buttonTypeface?.let { emptyStateButton.typeface = it }
             DrawableCompat.setTint(emptyStateButton.background, buttonBackgroundColor)
 
             emptyStateButton.setOnClickListener {
@@ -233,6 +230,32 @@ class EmptyState : ConstraintLayout {
             emptyStateIcon.layoutParams.width = size
         }
         return this
+    }
+
+    /**
+     * set font
+     * @param typeface
+     * @return instance of emptyState
+     */
+    fun setTypeface(typeface: Typeface): EmptyState {
+        this.typeface = typeface
+        binding.apply {
+            emptyStateTitle.typeface = typeface
+            emptyStateDescription.typeface = typeface
+            emptyStateButton.typeface = typeface
+        }
+        return this
+    }
+
+
+    /**
+     * set font
+     * @param fontRes resource
+     * @return instance of emptyState
+     */
+    fun setTypeface(@FontRes fontRes: Int): EmptyState {
+        typeface = ResourcesCompat.getFont(context, fontRes)
+        return typeface?.let { setTypeface(it) } ?: this
     }
 
     /**
@@ -297,18 +320,6 @@ class EmptyState : ConstraintLayout {
     }
 
     /**
-     * set title typeface
-     * @param typeface
-     * @return instance of emptyState
-     */
-    fun setTitleTypeface(typeface: Typeface): EmptyState {
-        titleTypeface = typeface
-        binding.emptyStateTitle.typeface = titleTypeface
-        return this
-    }
-
-
-    /**
      * set description resource id
      * @param resourceId get a string resource id, R.string.something
      * @return instance of emptyState
@@ -362,17 +373,6 @@ class EmptyState : ConstraintLayout {
     fun setDescriptionSize(@DimenRes dimenRes: Int): EmptyState {
         descriptionSize = resources.getDimensionPixelSize(dimenRes)
         binding.emptyStateDescription.setTextSize(TypedValue.COMPLEX_UNIT_PX, descriptionSize.toFloat())
-        return this
-    }
-
-    /**
-     * set description typeface
-     * @param typeface
-     * @return instance of emptyState
-     */
-    fun setDescriptionTypeface(typeface: Typeface): EmptyState {
-        descriptionTypeface = typeface
-        binding.emptyStateDescription.typeface = descriptionTypeface
         return this
     }
 
@@ -445,17 +445,6 @@ class EmptyState : ConstraintLayout {
     fun setButtonCornerSize(@DimenRes dimenRes: Int): EmptyState {
         buttonCornerSize = resources.getDimensionPixelSize(dimenRes)
         binding.emptyStateButton.cornerRadius = buttonCornerSize
-        return this
-    }
-
-    /**
-     * set button typeface
-     * @param typeface
-     * @return instance of emptyState
-     */
-    fun setButtonTypeface(typeface: Typeface): EmptyState {
-        buttonTypeface = typeface
-        binding.emptyStateButton.typeface = buttonTypeface
         return this
     }
 
