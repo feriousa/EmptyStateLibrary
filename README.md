@@ -42,12 +42,10 @@ dependencies {
             app:emps_iconSize="SMALL"
             app:emps_icon="@drawable/ic_sad"
             app:emps_fullscreen="true"
+            app:emps_font="@font/app_font"
             app:emps_title="@string/noInternet_title"
-            app:emps_titleFontPath="fonts/Montserrat_Bold.ttf"
-            app:emps_descriptionFontPath="fonts/Montserrat_Regular.ttf"
             app:emps_description="Please check your internet connection"
             app:emps_showButton="true"
-            app:emps_buttonFontPath="fonts/Montserrat_Bold.ttf"
             app:emps_buttonText="Enable WiFi"
             app:emps_buttonCorner="5dp"/>
 ```
@@ -57,17 +55,15 @@ Key | Value | Description
 emps_iconSize | SMALL, NORMALL, BIG | size of icon
 emps_icon | icon resource id | could be png or vector drawable
 emps_fullscreen | Boolean | Show icon in fullscreen mode, icon size is useless in fullscreen
+emps_font | Font | custom font resource
 emps_title | String | emptyState title, will be gone if not set 
-emps_titleFontPath | String | title font's path
 emps_titleSize | Dimension | title text size, dp or sp
 emps_titleColor | Color | title text color, Hex ot color reference
 emps_description     | String | emptyState description, will be gone if not set 
-emps_descriptionFontPath | String | title font's path
 emps_descriptionSize | Dimension | title text size, dp or sp
 emps_descriptionColor | Color | title text color, Hex or color reference
 emps_showButton | Boolean | show / hide button 
 emps_buttonText | String | button's text
-emps_buttonFontPath | String | button text font's path
 emps_buttonTextSize | Dimension | button text size, dp or sp
 emps_buttonTextColor | Color | button text color, Hex ot color reference
 emps_buttonBackgroundColor | Color | button background color, Hex ot color reference
